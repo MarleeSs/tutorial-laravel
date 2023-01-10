@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
-class AppEnvTest extends TestCase
+class AppEnvironmentTest extends TestCase
 {
     public function testAppEnv()
     {
