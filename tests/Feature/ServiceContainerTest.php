@@ -4,10 +4,13 @@ namespace Tests\Feature;
 
 use App\Data\Bar;
 use App\Data\Foo;
+use App\Data\HelloServiceIndonesia;
 use App\Data\Person;
+use App\Services\HelloService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use function PHPUnit\Framework\assertSame;
 
 class ServiceContainerTest extends TestCase
 {
@@ -64,10 +67,24 @@ class ServiceContainerTest extends TestCase
         $this->app->singleton(Foo::class, function ($app){
             return new Foo();
         });
+        $this->app->singleton(Bar::class, function ($app){
+            return new Bar($app->make(Foo::class));
+        });
 
         $foo = $this->app->make(Foo::class);
-        $bar = $this->app->make(Bar::class);
+        $bar1 = $this->app->make(Bar::class);
+        $bar2 = $this->app->make(Bar::class);
 
-        self::assertSame($foo, $bar->foo);
+        self::assertSame($foo, $bar1->foo);
+        assertSame($bar1, $bar2);
+    }
+
+    public function testInterfaceToClass()
+    {
+        $this->app->singleton(HelloService::class, HelloServiceIndonesia::class);
+
+        $helloService = $this->app->make(HelloService::class);
+
+        assertSame('Halo Indonesia', $helloService->hello("Indonesia"));
     }
 }
