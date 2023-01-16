@@ -6,10 +6,12 @@ use App\Data\Bar;
 use App\Data\Foo;
 use App\Data\HelloServiceIndonesia;
 use App\Services\HelloService;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class FooBarServiceProvider extends ServiceProvider
+class FooBarServiceProvider extends ServiceProvider implements DeferrableProvider
 {
+    // binding menggunakan singleton
     public array $singletons = [
        HelloService::class => HelloServiceIndonesia::class
     ];
@@ -21,6 +23,7 @@ class FooBarServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
         $this->app->singleton(Foo::class, function (){
             return new Foo();
         });
@@ -39,5 +42,10 @@ class FooBarServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+    }
+
+    public function provides()
+    {
+        return [HelloService::class, Foo::class, Bar::class];
     }
 }
