@@ -54,5 +54,4 @@ class RoutingTest extends TestCase
         $this->get('produk-redirect/123')
             ->assertRedirect('/products/123');
     }
-
 }
