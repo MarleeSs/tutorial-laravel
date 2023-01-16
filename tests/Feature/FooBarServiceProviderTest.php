@@ -8,6 +8,7 @@ use App\Services\HelloService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertSame;
 
 class FooBarServiceProviderTest extends TestCase
@@ -34,7 +35,7 @@ class FooBarServiceProviderTest extends TestCase
         $helloService2 = $this->app->make(HelloService::class);
 
         assertSame($helloService1, $helloService2);
+
+        assertEquals("Halo Indonesia", $helloService1->hello("Indonesia"));
     }
-
-
 }
