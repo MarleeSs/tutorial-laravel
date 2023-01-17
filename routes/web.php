@@ -59,3 +59,10 @@ Route::get('/produk-redirect/{produkId}', function ($produkId){
 
 Route::get('/controller/hello/request', [\App\Http\Controllers\HelloController::class, 'request']);
 Route::get('/controller/hello/{name}', [\App\Http\Controllers\HelloController::class, 'hello']);
+
+Route::get('/input/hello', [\App\Http\Controllers\InputController::class, 'hello']);
+Route::post('/input/hello', [\App\Http\Controllers\InputController::class, 'hello']);
+
+Route::post('/input/nested/hello', [\App\Http\Controllers\InputController::class, 'helloNested']);
+
+Route::post('/input/hello/encode', [\App\Http\Controllers\InputController::class, 'inputEncode']);

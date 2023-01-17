@@ -22,5 +22,4 @@ class ControllerTest extends TestCase
             ->assertSeeText("GET")
             ->assertSeeText("plain/text");
     }
-    // TODO input request
 }
