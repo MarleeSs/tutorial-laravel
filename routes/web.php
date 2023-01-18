@@ -72,3 +72,10 @@ Route::post('/input/type', [\App\Http\Controllers\InputController::class, 'input
 Route::post('/input/filter/only', [\App\Http\Controllers\InputController::class, 'filterOnly']);
 Route::post('/input/filter/except', [\App\Http\Controllers\InputController::class, 'filterExcept']);
 Route::post('/input/filter/merge', [\App\Http\Controllers\InputController::class, 'filterMerge']);
+
+Route::post('/upload/file', [\App\Http\Controllers\UploadController::class, 'upload']);
+
+Route::get('/response/type/view', [\App\Http\Controllers\ResponseController::class, 'responseView']);
+Route::get('/response/type/json', [\App\Http\Controllers\ResponseController::class, 'responseJson']);
+Route::get('/response/type/file', [\App\Http\Controllers\ResponseController::class, 'responseFile']);
+Route::get('/response/type/download', [\App\Http\Controllers\ResponseController::class, 'responseDownload']);
