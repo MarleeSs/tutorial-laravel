@@ -66,3 +66,9 @@ Route::post('/input/hello', [\App\Http\Controllers\InputController::class, 'hell
 Route::post('/input/nested/hello', [\App\Http\Controllers\InputController::class, 'helloNested']);
 
 Route::post('/input/hello/encode', [\App\Http\Controllers\InputController::class, 'inputEncode']);
+
+Route::post('/input/type', [\App\Http\Controllers\InputController::class, 'inputType']);
+
+Route::post('/input/filter/only', [\App\Http\Controllers\InputController::class, 'filterOnly']);
+Route::post('/input/filter/except', [\App\Http\Controllers\InputController::class, 'filterExcept']);
+Route::post('/input/filter/merge', [\App\Http\Controllers\InputController::class, 'filterMerge']);
