@@ -124,3 +124,6 @@ Route::controller(\App\Http\Controllers\FormController::class)->group(function (
     Route::post('/form', 'submitForm');
 });
 
+Route::get('/url/current', function () {
+    return \Illuminate\Support\Facades\URL::full();
+});
