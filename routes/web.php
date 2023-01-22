@@ -101,4 +101,6 @@ Route::get('/middleware/group', function () {
     return 'Middleware Group';
 })->middleware(['nma']);
 
-// TODO CSRF
+Route::get('/form', [\App\Http\Controllers\FormController::class, 'form']);
+Route::post('/form', [\App\Http\Controllers\FormController::class, 'submitForm']);
+// TODO Route group
