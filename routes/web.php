@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +96,12 @@ Route::controller(\App\Http\Controllers\RedirectController::class)->group(functi
     Route::get('/redirect/name', 'redirectName');
     Route::get('/redirect/name/{name}', 'redirectHello')
         ->name('redirect-hello');
+
+    // untuk mendapatkan link redirect-hello
+    Route::get('/redirect/named', function () {
+        return \Illuminate\Support\Facades\URL::route('redirect-hello', ['name' => 'Coba']);
+    });
+
     Route::get('/redirect/action', 'redirectAction');
     Route::get('/redirect/away', 'redirectAway');
 });
@@ -118,6 +125,10 @@ Route::middleware(['nama:CBA,401'])->prefix('/middleware')->group(function () {
 //        return 'Middleware Group';
 //    });
 //});
+
+Route::get('/url/action', function () {
+    return URL::action([\App\Http\Controllers\FormController::class, 'form']);
+});
 
 Route::controller(\App\Http\Controllers\FormController::class)->group(function () {
     Route::get('/form', 'form');
