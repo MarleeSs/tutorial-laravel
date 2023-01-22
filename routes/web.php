@@ -143,3 +143,15 @@ Route::controller(\App\Http\Controllers\SessionController::class)->group(functio
     Route::get('/session/create', 'createSession');
     Route::get('/session/get', 'getSession');
 });
+
+Route::get('/error/sample', function () {
+    return throw new Exception('Coba');
+});
+
+Route::get('/error/validation', function () {
+    throw new \App\Exceptions\ValidationException('Validation Error');
+});
+
+Route::get('/abort', function () {
+    abort(400, 'Anjirr');
+});

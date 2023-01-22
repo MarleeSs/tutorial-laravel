@@ -46,5 +46,9 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (ValidationException $exception, \Illuminate\Http\Request $request) {
+            return \response('Bad Request', 400);
+        });
     }
 }
