@@ -138,3 +138,8 @@ Route::controller(\App\Http\Controllers\FormController::class)->group(function (
 Route::get('/url/current', function () {
     return \Illuminate\Support\Facades\URL::full();
 });
+
+Route::controller(\App\Http\Controllers\SessionController::class)->group(function () {
+    Route::get('/session/create', 'createSession');
+    Route::get('/session/get', 'getSession');
+});
