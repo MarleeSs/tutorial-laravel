@@ -57,50 +57,70 @@ Route::get('/produk-redirect/{produkId}', function ($produkId) {
     return redirect()->route('product.detail', $produkId);
 });
 
-Route::get('/controller/hello/request', [\App\Http\Controllers\HelloController::class, 'request']);
-Route::get('/controller/hello/{name}', [\App\Http\Controllers\HelloController::class, 'hello']);
+Route::controller(\App\Http\Controllers\HelloController::class)->group(function () {
+    Route::get('/controller/hello/request', 'request');
+    Route::get('/controller/hello/{name}', 'hello');
+});
 
-Route::get('/input/hello', [\App\Http\Controllers\InputController::class, 'hello']);
-Route::post('/input/hello', [\App\Http\Controllers\InputController::class, 'hello']);
-
-Route::post('/input/nested/hello', [\App\Http\Controllers\InputController::class, 'helloNested']);
-
-Route::post('/input/hello/encode', [\App\Http\Controllers\InputController::class, 'inputEncode']);
-
-Route::post('/input/type', [\App\Http\Controllers\InputController::class, 'inputType']);
-
-Route::post('/input/filter/only', [\App\Http\Controllers\InputController::class, 'filterOnly']);
-Route::post('/input/filter/except', [\App\Http\Controllers\InputController::class, 'filterExcept']);
-Route::post('/input/filter/merge', [\App\Http\Controllers\InputController::class, 'filterMerge']);
+Route::controller(\App\Http\Controllers\InputController::class)->group(function () {
+    Route::get('/input/hello', 'hello');
+    Route::post('/input/hello', 'hello');
+    Route::post('/input/nested/hello', 'helloNested');
+    Route::post('/input/hello/encode', 'inputEncode');
+    Route::post('/input/type', 'inputType');
+    Route::post('/input/filter/only', 'filterOnly');
+    Route::post('/input/filter/except', 'filterExcept');
+    Route::post('/input/filter/merge', 'filterMerge');
+});
 
 Route::post('/upload/file', [\App\Http\Controllers\UploadController::class, 'upload'])
     ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
-Route::get('/response/type/view', [\App\Http\Controllers\ResponseController::class, 'responseView']);
-Route::get('/response/type/json', [\App\Http\Controllers\ResponseController::class, 'responseJson']);
-Route::get('/response/type/file', [\App\Http\Controllers\ResponseController::class, 'responseFile']);
-Route::get('/response/type/download', [\App\Http\Controllers\ResponseController::class, 'responseDownload']);
+Route::prefix('/response/type')->group(function () {
+    Route::get('/view', [\App\Http\Controllers\ResponseController::class, 'responseView']);
+    Route::get('/json', [\App\Http\Controllers\ResponseController::class, 'responseJson']);
+    Route::get('/file', [\App\Http\Controllers\ResponseController::class, 'responseFile']);
+    Route::get('/download', [\App\Http\Controllers\ResponseController::class, 'responseDownload']);
+});
 
-Route::get('/cookie/set', [\App\Http\Controllers\CookieController::class, 'createCookie']);
-Route::get('/cookie/get', [\App\Http\Controllers\CookieController::class, 'getCookie']);
-Route::get('/cookie/clear', [\App\Http\Controllers\CookieController::class, 'clearCookie']);
+Route::controller(\App\Http\Controllers\CookieController::class)->group(function () {
+    Route::get('/cookie/set', 'createCookie');
+    Route::get('/cookie/get', 'getCookie');
+    Route::get('/cookie/clear', 'clearCookie');
+});
 
-Route::get('/redirect/from', [\App\Http\Controllers\RedirectController::class, 'redirectFrom']);
-Route::get('/redirect/to', [\App\Http\Controllers\RedirectController::class, 'redirectTo']);
-Route::get('/redirect/name', [\App\Http\Controllers\RedirectController::class, 'redirectName']);
-Route::get('/redirect/name/{name}', [\App\Http\Controllers\RedirectController::class, 'redirectHello'])
-    ->name('redirect-hello');
-Route::get('/redirect/action', [\App\Http\Controllers\RedirectController::class, 'redirectAction']);
-Route::get('/redirect/away', [\App\Http\Controllers\RedirectController::class, 'redirectAway']);
+Route::controller(\App\Http\Controllers\RedirectController::class)->group(function () {
+    Route::get('/redirect/from', 'redirectFrom');
+    Route::get('/redirect/to', 'redirectTo');
+    Route::get('/redirect/name', 'redirectName');
+    Route::get('/redirect/name/{name}', 'redirectHello')
+        ->name('redirect-hello');
+    Route::get('/redirect/action', 'redirectAction');
+    Route::get('/redirect/away', 'redirectAway');
+});
 
-Route::get('/middleware/api', function () {
-    return 'Middleware Api';
-})->middleware(['nama:CBA,401']);
+Route::middleware(['nama:CBA,401'])->prefix('/middleware')->group(function () {
+    Route::get('/api', function () {
+        return 'Middleware Api';
+    });
 
-Route::get('/middleware/group', function () {
-    return 'Middleware Group';
-})->middleware(['nma']);
+    Route::get('/group', function () {
+        return 'Middleware Group';
+    });
+});
 
-Route::get('/form', [\App\Http\Controllers\FormController::class, 'form']);
-Route::post('/form', [\App\Http\Controllers\FormController::class, 'submitForm']);
-// TODO Route group
+//Route::middleware(['nama:CBA,401'])->prefix('/middleware')->controller(//)->group(function () {
+//    Route::get('/api', function () {
+//        return 'Middleware Api';
+//    });
+//
+//    Route::get('/group', function () {
+//        return 'Middleware Group';
+//    });
+//});
+
+Route::controller(\App\Http\Controllers\FormController::class)->group(function () {
+    Route::get('/form', 'form');
+    Route::post('/form', 'submitForm');
+});
+
